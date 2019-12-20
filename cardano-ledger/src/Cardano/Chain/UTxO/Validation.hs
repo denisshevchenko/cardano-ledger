@@ -174,7 +174,7 @@ validateTx env utxo (Annotated tx txBytes) = do
     `orThrowError` TxValidationTxTooLarge txSize maxTxSize
 
   -- Check that the transaction attributes are less than the max size
-  unknownAttributesLength (txAttributes tx) < 128
+  unknownAttributesLength (txAttributes tx) < 16384
     `orThrowError` TxValidationUnknownAttributes
 
   -- Check that outputs have valid NetworkMagic
@@ -252,7 +252,7 @@ validateTxOutNM
   -> m ()
 validateTxOutNM nm txOut = do
   -- Make sure that the unknown attributes are less than the max size
-  unknownAttributesLength (addrAttributes (txOutAddress txOut)) < 128
+  unknownAttributesLength (addrAttributes (txOutAddress txOut)) < 16384
     `orThrowError` TxValidationUnknownAddressAttributes
 
   -- Check that the network magic in the address matches the expected one
